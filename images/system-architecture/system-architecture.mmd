@@ -1,0 +1,27 @@
+flowchart LR
+    U[User] --> FE[React Frontend\nfrontend/src/App.tsx]
+    FE -->|POST /register, /login| AUTH[Auth Routes\nroutes/auth.py]
+    FE -->|POST /predict| PRED[Prediction Route\nroutes/prediction.py]
+    FE -->|POST /submit-report\nJSON or CSV| PAT[Patient Route\nroutes/patient.py]
+    FE -->|GET /reports/report_id/csv| PAT
+
+    AUTH -->|SQLAlchemy Session| DB[(MySQL / SQLite fallback)]
+    PAT -->|SQLAlchemy Session| DB
+
+    PRED --> MLSVC[ML Service\nservices/ml_model.py]
+    PAT --> MLSVC
+
+    PRED --> MEDSVC[Medicine Service\nservices/medicine_recommendation.py]
+    PAT --> MEDSVC
+
+    MLSVC --> MODEL[(model.pkl)]
+    MLSVC --> DATA[(data.csv fallback training)]
+    MEDSVC --> MEDDATA[(medicines & drugs/*.json,*.csv)]
+
+    PAT --> CSV[(logs/report_exports/report_report_id.csv)]
+
+    subgraph API[FastAPI App\nbreast_cancer_system/main.py]
+        AUTH
+        PRED
+        PAT
+    end

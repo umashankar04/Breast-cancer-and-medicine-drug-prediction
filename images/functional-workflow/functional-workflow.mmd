@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant FE as React Frontend
+    participant API as FastAPI
+    participant Auth as /register,/login
+    participant Pred as /predict
+    participant Patient as /submit-report
+    participant ML as ML Service
+    participant Med as Medicine Service
+    participant DB as Database
+    participant FS as File Storage
+
+    User->>FE: Register or Login
+    FE->>API: POST /register or POST /login
+    API->>Auth: Validate and issue token
+    Auth-->>FE: JWT access_token
+
+    User->>FE: Provide 30 features / upload report
+
+    alt Predict without storage
+        FE->>API: POST /predict (Bearer token)
+        API->>Pred: Validate payload
+        Pred->>ML: predict_breast_cancer(features)
+        ML-->>Pred: label + probability
+        Pred->>Med: get_medicine_recommendation(label)
+        Med-->>Pred: recommendation
+        Pred-->>FE: prediction response
+    else Submit and store report
+        FE->>API: POST /submit-report (JSON or CSV)
+        API->>Patient: Parse + normalize + validate
+        Patient->>ML: predict_breast_cancer(features)
+        ML-->>Patient: label + probability
+        Patient->>Med: get_medicine_recommendation(label)
+        Med-->>Patient: recommendation
+        Patient->>DB: INSERT report row
+        Patient->>FS: Write logs/report_exports/report_{id}.csv
+        Patient-->>FE: report response + csv_download_url
+        FE->>API: GET /reports/{id}/csv
+        API->>Patient: authorize user/report ownership
+        Patient-->>FE: CSV file download
+    end

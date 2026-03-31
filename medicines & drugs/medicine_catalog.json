@@ -1,0 +1,49 @@
+{
+  "benign": {
+    "medicine_name": "No aggressive cancer drug",
+    "recommended_medicines": [
+      "No cancer-specific drug is usually recommended",
+      "Routine follow-up and monitoring only"
+    ],
+    "dosage": "N/A",
+    "time_of_day": "N/A",
+    "supporting_actions": [
+      "Regular monitoring",
+      "Routine screening follow-up",
+      "Lifestyle advice and clinical observation"
+    ],
+    "disclaimer": "This system is for screening support only and is not a medical diagnosis. Please consult a licensed clinician for any symptoms or follow-up questions."
+  },
+  "malignant": {
+    "medicine_name": "Oncology consultation required",
+    "recommended_medicines": [
+      "Tamoxifen",
+      "Anastrozole",
+      "Letrozole",
+      "Exemestane",
+      "Fulvestrant",
+      "Trastuzumab",
+      "Pertuzumab",
+      "Ado-trastuzumab emtansine",
+      "Fam-trastuzumab deruxtecan",
+      "Palbociclib",
+      "Ribociclib",
+      "Abemaciclib",
+      "Paclitaxel",
+      "Docetaxel",
+      "Doxorubicin",
+      "Cyclophosphamide",
+      "Carboplatin",
+      "Capecitabine",
+      "Olaparib"
+    ],
+    "dosage": "Dose depends on cancer subtype, stage, receptor status, age, weight, and oncology protocol",
+    "time_of_day": "As prescribed by the oncologist",
+    "supporting_actions": [
+      "Urgent doctor consultation",
+      "Confirm subtype with pathology and receptor testing",
+      "Discuss chemotherapy, hormone therapy, targeted therapy, and radiation with an oncologist"
+    ],
+    "disclaimer": "This is a high-risk screening result and requires urgent clinical review. Do not self-medicate; consult an oncologist immediately."
+  }
+}

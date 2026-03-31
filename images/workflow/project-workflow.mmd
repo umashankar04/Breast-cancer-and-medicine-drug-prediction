@@ -1,0 +1,22 @@
+flowchart TD
+    A[Run run.bat] --> B[Check Python venv + npm + requirements]
+    B --> C[Health check backend 8000]
+    C -->|Not running| D[Start uvicorn main:app]
+    C -->|Running| E[Skip backend start]
+    D --> F[Wait until backend ready]
+    E --> G[Health check frontend 5173]
+    F --> G
+    G -->|Not running| H[Start npm run dev]
+    G -->|Running| I[Skip frontend start]
+    H --> J[Wait until frontend ready]
+    I --> K[Open browser tabs /docs and frontend]
+    J --> K
+
+    K --> L[User registers or logs in]
+    L --> M[JWT token stored in localStorage]
+    M --> N[Enter 30 features or upload CSV/PDF/Image]
+    N --> O[Predict only -> /predict]
+    N --> P[Submit report -> /submit-report]
+    O --> Q[Prediction + probability + medicine guidance]
+    P --> R[Persist DB row + generate CSV file]
+    R --> S[Download CSV from /reports/report_id/csv]
